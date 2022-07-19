@@ -1,0 +1,40 @@
+.layout-horizontal-bar .main-content-wrap{
+    background: #efefef;
+}
+
+
+
+.btn-primary{
+    color:#fff !important;
+  }
+
+
+
+ .brand-logo-header{
+  width: 18%;
+  height: 60%;
+  background: #50a393;
+  margin-left: 10px;
+  clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 12% 49%, 0% 0%);
+  text-align: center;
+  vertical-align: middle;
+  padding: 4px 4px 4px 17px;
+  font-size: 19px;
+  color: #fff;
+  }
+
+
+  .customDatePickerWidth, 
+.customDatePickerWidth > div.react-datepicker-wrapper, 
+.customDatePickerWidth > div > div.react-datepicker__input-container
+.customDatePickerWidth > div > div.react-datepicker__input-container input {
+   width: 100%;
+}
+
+
+.radio-outline-success{
+  display: inline-block;
+    margin: 0 15px;
+}
+
+

@@ -1,0 +1,193 @@
+import React, { useState, useRef } from 'react';
+import Layout3 from '../../../@gull/GullLayout/Layout3/Layout3';
+import { Dropdown } from "react-bootstrap";
+import DropdownToggle from "react-bootstrap/DropdownToggle";
+import DropdownMenu from "react-bootstrap/DropdownMenu";
+import { InertiaLink, usePage } from "@inertiajs/inertia-react";
+import route from "ziggy-js";
+import swal from '@sweetalert/with-react';
+import { Inertia } from '@inertiajs/inertia';
+import CustomDataTable from '../../../@gull/components/CustomDataTable';
+
+
+const RecordList = (props) => {
+    const customTableRef = useRef();
+    const { sub_title, title, getPermission } = props;
+
+    //Get Permission from array
+    const viewFound = getPermission.find(element => element == 'view');
+    const createFound = getPermission.find(element => element == 'create');
+    const editFound = getPermission.find(element => element == 'update');
+    const deleteFound = getPermission.find(element => element == 'delete');
+    //Get Permission from array
+
+
+    const columns = [
+        {
+            name: 'Date',
+            selector: 'invoice_date',
+            sortable: true,
+            center: true,
+        },
+        {
+            selector: 'ag_no',
+            name: 'A/G #',
+            sortable: true,
+            left: true,
+            cell: row => <div className="btn-group">
+                {row.ag_no}
+            </div>
+
+        },
+        {
+            selector: 'supplier_name',
+            name: 'Supplier (Brand - Count)',
+            sortable: true,
+            left: true,
+            width: '20%',
+            cell: row => <div className="btn-group">
+                {row.supplier_name}
+                <br />
+                {row.brand_name} - {row.count_name}
+            </div>
+
+        },
+
+
+        {
+            selector: 'broker_name',
+            name: 'Broker Name',
+            sortable: true,
+            left: true,
+            cell: row => <div className="btn-group">
+                {row.broker_name}
+            </div>
+
+        },
+
+
+        {
+            selector: 'qty',
+            name: 'Qty',
+            sortable: true,
+            left: true,
+            cell: row => <div className="btn-group">
+                {row.qty}
+            </div>
+
+        },
+
+
+        {
+            selector: 'rate',
+            name: 'Rate',
+            sortable: true,
+            left: true,
+            cell: row => <div className="btn-group">
+                {row.rate}
+            </div>
+
+        },
+        {
+            selector: 'action',
+            name: 'Action',
+            width: '10%',
+            center: true,
+            cell: row => <div className="btn-group" >
+                <Dropdown>
+                    <DropdownToggle variant="btn" disabled={(editFound || deleteFound) ? false : true} className='btn btn-outline-primary btn-sm'>
+                        <i className="fas fa-cog"></i>
+                    </DropdownToggle>
+                    {(row.deleted_at == null) &&
+                        <DropdownMenu>
+                            {editFound &&
+                                <InertiaLink href={route('commerce.unassigned_purchases.edit', row.id)} className="dropdown-item cursor-pointer" as="button">
+                                    <i className="fa fa-edit"></i> Edit
+                                </InertiaLink>
+                            }
+                            {deleteFound &&
+                            <React.Fragment>
+                                <div className="dropdown-divider"></div>
+                                <a href="#" onClick={() => customTableRef.current.multiDelete(row.id)} className="dropdown-item cursor-pointer">
+                                    <i className="fa fa-trash"></i> Delete
+                                </a>
+                            </React.Fragment>
+                            }
+                        </DropdownMenu>
+                    }
+
+                    {(row.deleted_at != null) &&
+                        <DropdownMenu>
+                            <a href="#" onClick={() => customTableRef.current.multiRestore(row.id)} className="dropdown-item cursor-pointer">
+                                <i className="fas fa-trash-restore"></i> Restore
+                            </a>
+                            <a href="#" onClick={() => customTableRef.current.multiPurge(row.id)} className="dropdown-item cursor-pointer">
+                                <i className="fas fa-trash"></i> Purge
+                            </a>
+                        </DropdownMenu>
+                        
+                    }
+                </Dropdown>
+            </div>,
+
+        },
+    ];
+
+
+
+
+    return (
+        <Layout3 title={title}>
+            <div className="row mb-4">
+                <div className="col-md-12 mb-4">
+                    <div className="card text-left">
+                        <div className="card-header">
+                            <div className="row">
+                                <div className="col-md-8"><h4 className="card-title">
+                                    <InertiaLink href={route('home')}>
+                                        <span
+                                            className="font-weight-bold"
+                                            style={{ fontSize: "22px" }}
+                                        >
+                                            {title}{" "}
+                                        </span>
+                                    </InertiaLink>
+                                    / {sub_title}
+                                </h4>
+                                </div>
+                                {createFound &&
+                                    <div className="col-md-4 text-right">
+                                        <div className="btn-group dropleft">
+                                            <Dropdown>
+                                                <DropdownToggle variant="btn" className="btn btn-outline-primary dropdown-toggle">
+                                                    Action
+                                                </DropdownToggle>
+                                                <DropdownMenu>
+                                                    <InertiaLink className="dropdown-item cursor-pointer" href={route('commerce.unassigned_purchases.create')}>
+                                                        Add
+                                                    </InertiaLink>
+                                                </DropdownMenu>
+                                            </Dropdown>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                        <div className="card-body">
+                            <CustomDataTable
+                                columns={columns}
+                                ref={customTableRef}
+                                url='records_data'
+                                routeName='commerce.unassigned_purchases'
+                            />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Layout3>
+    );
+};
+
+export default RecordList;

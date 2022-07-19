@@ -1,0 +1,91 @@
+/* Clearable text inputs */
+.clearable{
+  position: relative;
+  display: inline-block;
+}
+.clearable input[type=text]{
+  padding-right: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.clearable__clear{
+  display: block;
+  position: absolute;
+  right:0; top:0;
+  padding: 8px 8px;
+  font-style: normal;
+  font-size: 1.2em;
+  user-select: none;
+  cursor: pointer;
+}
+.clearable input::-ms-clear {  /* Remove IE default X */
+  display: none;
+}
+
+
+.responsivex {
+  overflow-x: auto;
+}
+
+
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 15px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
+
+
+.rdt_TableBody{
+  overflow-x: hidden;
+    width: max-content;
+    display: block;
+    width: 100%;
+    min-height: 200px;
+}
+
+.rdt_TableCol_Sortable{
+  align-items: baseline !important;
+  margin-top: 10px;
+}
+
+/* .clearable{
+  position: fixed;
+} */
+
+
+.react-datepicker{
+  position: absolute;
+  z-index: 99999;
+}
+
+
+.sc-jTzLTM{
+  position: absolute !important;
+  right: 0 !important;
+  margin: 5px 16px !important;
+}
+
+.rdt_TableCol .form-control{
+  height: 25px;
+}
+
+.bHnEbT{
+  pointer-events: all;
+}
+
